@@ -1,0 +1,48 @@
+<!-- partyBoardCreatePage.html -->
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>Create Post</title>
+    <link href="https://cdn.quilljs.com/1.3.7/quill.snow.css" rel="stylesheet">
+    <script src="https://cdn.quilljs.com/1.3.7/quill.min.js"></script>
+</head>
+<body>
+    <!-- 네비게이션 바 -->
+	<div class="navbar">
+	    <a th:href="@{'/partyBoardMainPage/' + ${party.partyId}}">BOARD</a>
+	    <a th:href="@{'/partyGameMainPage/' + ${party.partyId}}">GAME</a>
+	    <a th:href="@{'/partyChatMainPage/' + ${party.partyId}}">CHAT</a>
+	    <a th:href="@{'/partyFileMainPage/' + ${party.partyId}}">FILE</a>
+	    <a th:href="@{'/partySettingPage/' + ${party.partyId}}">SETTINGS</a>
+	</div>
+    <!-- 현재 파티 정보 -->
+    <div>
+        <p th:text="'Party: ' + ${party.partyName}">Party Name</p>
+        <p th:text="'Party ID: ' + ${party.partyId}">Party ID</p>
+        <p th:text="'username: ' + ${user.username}">Party ID</p>
+        <p th:text="'email: ' + ${user.email}">Party ID</p>
+    </div>
+    <h1>Create New Post</h1>
+    <form action="/partyBoardCreate" method="post" onsubmit="submitForm()">
+        <label for="title">Title:</label>
+        <input type="text" id="title" name="title" required>
+        <br>
+        <label for="content">Content:</label>
+        <div id="editor" style="height: 200px; border: 1px solid #ccc;"></div>
+        <textarea id="content" name="content" style="display:none;"></textarea>
+        <br>
+        <button type="submit">Submit</button>
+    </form>
+
+    <script>
+        const quill = new Quill('#editor', {
+            theme: 'snow'
+        });
+        function submitForm() {
+            const contentInput = document.getElementById('content');
+            contentInput.value = quill.root.innerHTML;
+        }
+    </script>
+</body>
+</html>

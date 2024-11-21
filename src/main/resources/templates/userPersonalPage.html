@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>userPersonalPage</title>
+</head>
+<body>
+    <a href="/logout">Logout</a>
+    <h1>Welcome to your Page</h1>
+
+    <p>Username: <span th:text="${user.username}"></span></p>
+    <p>Email: <span th:text="${user.email}"></span></p>
+    <p>Created At: <span th:text="${user.createdAt}"></span></p>
+    
+    
+    <a href="/userPersonalPartyCratePage">Create or Join Party</a>
+    <h2>Your Parties</h2>
+		<ul>
+		    <li th:each="party : ${parties}">
+		        <a th:href="'/partyBoardMainPage/' + ${party.partyId}" th:text="${party.partyName}"></a>
+		    </li>
+		</ul>
+    
+     <a href="/userPersonalSettingPage">Setting</a>
+</body>
+</html>

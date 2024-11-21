@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>Reset Password</title>
+</head>
+<body>
+    <h1>Reset Your Password</h1>
+    <form action="/updatePassword" method="POST">
+        <input type="hidden" name="id" th:value="${user.id}">
+        <label for="password">New Password:</label>
+        <input type="password" id="password" name="password" required>
+        <br><br>
+        <button type="submit">Reset Password</button>
+    </form>
+    <br>
+    <a href="/index">Back to Index</a>
+</body>
+</html>

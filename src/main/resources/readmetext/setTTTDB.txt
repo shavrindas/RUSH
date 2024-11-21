@@ -1,0 +1,209 @@
+-- 사용자 정보 테이블
+CREATE TABLE users (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    username VARCHAR(255),
+    password VARCHAR(255),
+    email VARCHAR(255),
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    active BOOLEAN
+);
+
+-- 그룹 테이블
+CREATE TABLE party (
+    party_id INT PRIMARY KEY AUTO_INCREMENT,
+    party_name VARCHAR(255),
+    party_code VARCHAR(255),
+    party_invite VARCHAR(255),
+    party_created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    party_active BOOLEAN
+);
+
+-- 역할 및 권한 테이블, 그룹 종속
+CREATE TABLE role (
+    role_id INT PRIMARY KEY AUTO_INCREMENT,
+    party_id INT,
+    role_name VARCHAR(255),
+    project_delete BOOLEAN,
+    admin_delete BOOLEAN,
+    basic_delete BOOLEAN,
+    basic_write BOOLEAN,
+    file_write BOOLEAN,
+    comment_write BOOLEAN,
+    FOREIGN KEY (party_id) REFERENCES party(party_id)
+);
+
+-- 그룹과 사용자 관계 테이블
+CREATE TABLE party_users (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    party_id INT,
+    user_id INT,
+    role_id INT,
+    join_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (party_id) REFERENCES party(party_id),
+    FOREIGN KEY (user_id) REFERENCES users(id),
+    FOREIGN KEY (role_id) REFERENCES role(role_id) -- 역할을 그룹별로 종속되게 참조
+);
+
+
+CREATE TABLE party_board_post (
+    post_id INT AUTO_INCREMENT PRIMARY KEY,
+    party_id INT, 
+    title VARCHAR(50) NOT NULL,
+    content TEXT NOT NULL,
+    author VARCHAR(50) NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    FOREIGN KEY (party_id) REFERENCES party(party_id)
+);
+
+
+CREATE TABLE party_board_comment (
+    comment_id BIGINT AUTO_INCREMENT PRIMARY KEY,
+    post_id INT NOT NULL,
+    author VARCHAR(50) NOT NULL,
+    content TEXT NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (post_id) REFERENCES party_board_post(post_id) 
+);
+
+
+CREATE TABLE party_board_image (
+    image_id BIGINT AUTO_INCREMENT PRIMARY KEY,
+    post_id INT NOT NULL,
+    url VARCHAR(255) NOT NULL,
+    uploaded_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (post_id) REFERENCES party_board_post(post_id) );
+
+
+-- 그룹 파일 버전 관리 테이블
+CREATE TABLE party_file_version (
+    version_id INT PRIMARY KEY AUTO_INCREMENT,
+    party_id INT,
+    version_name VARCHAR(255),
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    FOREIGN KEY (party_id) REFERENCES party(party_id)
+);
+
+-- 그룹 파일 테이블
+CREATE TABLE party_file (
+    file_id INT PRIMARY KEY AUTO_INCREMENT,
+    party_id INT,
+    version_id INT,
+    file_name VARCHAR(255),
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    FOREIGN KEY (party_id) REFERENCES party(party_id),
+    FOREIGN KEY (version_id) REFERENCES party_file_version(version_id)
+);
+
+
+INSERT INTO users (username, password, email, active) VALUES
+('aaaa', 'aaaa', 'aaaa@a.com', 1),
+('bbbb', 'bbbb', 'bbbb@b.com', 1),
+('cccc', 'cccc', 'cccc@c.com', 1),
+('dddd', 'dddd', 'dddd@d.com', 1),
+('eeee', 'eeee', 'eeee@e.com', 1),
+('ffff', 'ffff', 'ffff@f.com', 1),
+('gggg', 'gggg', 'gggg@g.com', 1),
+('hhhh', 'hhhh', 'hhhh@h.com', 1),
+('iiii', 'iiii', 'iiii@i.com', 1),
+('jjjj', 'jjjj', 'jjjj@j.com', 1),
+('kkkk', 'kkkk', 'kkkk@k.com', 1),
+('llll', 'llll', 'llll@l.com', 1),
+('mmmm', 'mmmm', 'mmmm@m.com', 1),
+('nnnn', 'nnnn', 'nnnn@n.com', 1),
+('oooo', 'oooo', 'oooo@o.com', 1),
+('pppp', 'pppp', 'pppp@p.com', 1),
+('qqqq', 'qqqq', 'qqqq@q.com', 1),
+('rrrr', 'rrrr', 'rrrr@r.com', 1),
+('ssss', 'ssss', 'ssss@s.com', 1);
+
+
+INSERT INTO party (party_name, party_code, party_invite, party_active) VALUES
+('A', 'AAAAA', 'AAAAA', 1),
+('B', 'BBBBB', 'BBBBB', 1),
+('C', 'CCCCC', 'CCCCC', 1),
+('D', 'DDDDD', 'DDDDD', 1),
+('E', 'EEEEE', 'EEEEE', 1);
+
+
+
+INSERT INTO role (party_id, role_name, project_delete, admin_delete, basic_delete, basic_write, file_write, comment_write) VALUES
+
+(1, 'admin', 1, 1, 1, 1, 1, 1),
+(1, 'editor', 0, 0, 1, 1, 1, 1),
+(1, 'ban', 0, 0, 0, 0, 0, 0),
+
+(2, 'admin', 1, 1, 1, 1, 1, 1),
+(2, 'editor', 0, 0, 1, 1, 1, 1),
+(2, 'ban', 0, 0, 0, 0, 0, 0),
+
+(3, 'admin', 1, 1, 1, 1, 1, 1),
+(3, 'editor', 0, 0, 1, 1, 1, 1),
+(3, 'ban', 0, 0, 0, 0, 0, 0),
+
+(4, 'admin', 1, 1, 1, 1, 1, 1),
+(4, 'editor', 0, 0, 1, 1, 1, 1),
+(4, 'ban', 0, 0, 0, 0, 0, 0),
+
+(5, 'admin', 1, 1, 1, 1, 1, 1),
+(5, 'editor', 0, 0, 1, 1, 1, 1),
+(5, 'ban', 0, 0, 0, 0, 0, 0);
+
+
+
+INSERT INTO party_users (party_id, user_id, role_id) VALUES
+(1, 1, 1), -- aaaa -> admin
+(1, 2, 1), -- bbbb -> admin
+(1, 3, 2), -- cccc -> editor
+(1, 4, 2), -- dddd -> editor
+(1, 5, 2), -- eeee -> editor
+(1, 6, 2), -- ffff -> editor
+(1, 7, 2), -- gggg -> editor
+(1, 8, 2), -- hhhh -> editor
+(1, 9, 3), -- iiii -> ban
+(1, 10, 3); -- jjjj -> ban
+
+-- 파티 2에 사용자 배정
+INSERT INTO party_users (party_id, user_id, role_id) VALUES
+(2, 11, 1), -- kkkk -> admin
+(2, 12, 1), -- llll -> admin
+(2, 13, 2), -- mmmm -> editor
+(2, 14, 2), -- nnnn -> editor
+(2, 15, 2), -- oooo -> editor
+(2, 16, 2), -- pppp -> editor
+(2, 17, 2), -- qqqq -> editor
+(2, 18, 2), -- rrrr -> editor
+(2, 19, 3); -- ssss -> ban
+
+
+-- 파티 3에 사용자 배정
+INSERT INTO party_users (party_id, user_id, role_id) VALUES
+(3, 1, 1), -- aaaa -> admin
+(3, 2, 1), -- bbbb -> admin
+(3, 3, 2), -- cccc -> editor
+(3, 4, 2), -- dddd -> editor
+(3, 5, 2), -- eeee -> editor
+(3, 6, 2), -- ffff -> editor
+(3, 7, 2), -- gggg -> editor
+(3, 8, 2), -- hhhh -> editor
+(3, 9, 3), -- iiii -> ban
+(3, 10, 3); -- jjjj -> ban
+
+-- 파티 4에 사용자 배정
+INSERT INTO party_users (party_id, user_id, role_id) VALUES
+(4, 11, 1), -- kkkk -> admin
+(4, 12, 1), -- llll -> admin
+(4, 13, 2), -- mmmm -> editor
+(4, 14, 2), -- nnnn -> editor
+(4, 15, 2), -- oooo -> editor
+(4, 16, 2), -- pppp -> editor
+(4, 17, 2), -- qqqq -> editor
+(4, 18, 2), -- rrrr -> editor
+(4, 19, 3); -- ssss -> ban
+
+-- 파티 5에 사용자 배정
+INSERT INTO party_users (party_id, user_id, role_id) VALUES
+(5, 1, 1), -- aaaa -> editor
+(5, 2, 2), -- bbbb -> editor
+(5, 3, 2), -- cccc -> ban
+(5, 4, 2); -- dddd -> ban

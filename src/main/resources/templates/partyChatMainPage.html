@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>Party Chat Page</title>
+</head>
+<body>
+    <!-- 네비게이션 바 -->
+    <div class="navbar">
+        <a th:href="@{'/partyBoardMainPage/' + ${party.partyId}}">BOARD</a>
+        <a th:href="@{'/partyGameMainPage/' + ${party.partyId}}">GAME</a>
+        <a th:href="@{'/partyChatMainPage/' + ${party.partyId}}">CHAT</a>
+        <a th:href="@{'/partyFileMainPage/' + ${party.partyId}}">FILE</a>
+        <a th:href="@{'/partySettingPage/' + ${party.partyId}}">SETTINGS</a>
+    </div>
+    <!-- 현재 파티 정보 -->
+    <div>
+        <p th:text="'Party: ' + ${party.partyName}">Party Name</p>
+        <p th:text="'Party ID: ' + ${party.partyId}">Party ID</p>
+        <p th:text="'username: ' + ${user.username}">Party ID</p>
+        <p th:text="'email: ' + ${user.email}">Party ID</p>
+    </div>
+
+    <h1>Party Chat Page</h1>
+    <p>채팅 관련 콘텐츠를 여기에 추가하세요.</p>
+</body>
+</html>

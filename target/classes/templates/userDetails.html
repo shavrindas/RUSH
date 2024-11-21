@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>User Details</title>
+</head>
+<body>
+    <a href="/index">Go index</a>
+
+    <h1>User Details</h1>
+
+    <!-- 사용자가 ID를 입력할 수 있는 폼 추가 -->
+    <form action="/searchUser" method="post">
+        <label for="id">Enter User ID:</label>
+        <input type="text" id="id" name="id" required />
+        <button type="submit">Search</button>
+    </form>
+
+    <!-- 사용자가 입력한 ID로 조회한 사용자 정보 출력 -->
+    <div th:if="${user != null}">
+        <h3>Username: <span th:text="${user.username}"></span></h3>
+        <p>Email: <span th:text="${user.email}"></span></p>
+        <p>Password: <span th:text="${user.password}"></span></p>
+        <p>Created At: <span th:text="${user.createdAt}"></span></p>
+        <p>Active: <span th:text="${user.active}"></span></p>
+    </div>
+
+    <!-- 사용자가 유효하지 않은 ID를 입력했을 때 출력되는 메시지 -->
+    <div th:if="${message != null}">
+        <p th:text="${message}"></p>
+    </div>
+
+
+</body>
+</html>

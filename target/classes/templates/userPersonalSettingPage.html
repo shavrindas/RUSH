@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>Personal Settings</title>
+</head>
+<body>
+    <a href="/userPersonalPage">Back to Personal Page</a>
+    <h1>User Settings</h1>
+
+    <p>Username: <span th:text="${user.username}"></span></p>
+    <p>Email: <span th:text="${user.email}"></span></p>
+    <p>Created At: <span th:text="${user.createdAt}"></span></p>
+
+    <br>
+
+    <a href="/userPersonalInfoEditPage">Edit Personal Info</a>
+    <br><br>
+
+</body>
+</html>

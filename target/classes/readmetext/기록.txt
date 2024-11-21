@@ -1,0 +1,74 @@
+개발 기록물 and 설명
+==============================================================
+RUSH TTT 가 만들어진 이유 
+
+기존 FineArt 작업물에서 RUSH TTT 로 바꾼 이유는 다음과 같다 
+여러 부문에서 직관성을 높일 필요가 있었다 
+ - 패키지 이름 체계화  
+ - 무군별하게 만들어진 html 이름 재정립 
+ - 새로운 html 탬플릿 
+ 
+ 특히나 새로운 html 탬플릿이 추가될 예정이였기에 
+ 이 기회에 html 명명법을 새로 정립했다 
+ 또한 FineArt 는 초기 개발 활성화를 위해 만들어진 작업이였기에 
+ 체계적인 연계보다는 코드 더미 위에 코드가 올려져 있는 것과 다름없는 구조였다 
+ ==============================================================
+ html 구조도 
+ 
+----- 로그인 이전 상태  -----
+
+userFind
+ 이메일 and  (active is not 0)  ->userNewPass
+
+userNewPass
+  새로운 비밀번호 
+
+
+----- 로그인된 상태 -----
+
+userPersonalPage
+ 설정 -> userPersonalSettingPage
+
+ -> 현재 소속된 그룹 목록 
+
+
+userPersonalSettingPage
+개인정보 보기 -> 개인정보 수정
+설정 조정 
+
+
+userPersonalInfoEditPage
+
+
+userPersonalPartyCratePage
+새로운 그룹을 생성하기 
+새로운 그룹에 참가하기 
+
+
+
+----- 그룹 참가 상태 -----
+
+
+
+그룹 참가 이전에 그룹이 존재하는지 확인할 필요가 있음 <- 체크 해야함 
+
+
+
+partyBoardMainPage	보드 페이지 
+partyBoardSectionPage	각 페이지
+partyBoardCratePage	페이지 생성
+partyBoardEditPage		페이지 수정
+
+partyFileMainPage		파일 페이지 
+partyFileVersionPage	파일 버전
+partyFileSectionlPage	파일 버전 
+
+
+partyPlay
+partyPlay
+ 
+ 
+ 
+ ==============================================================
+ ==============================================================
+ 
