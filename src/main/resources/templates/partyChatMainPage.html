@@ -17,7 +17,7 @@
 <div>
     <p th:text="'Party: ' + ${party.partyName}">Party Name</p>
     <p th:text="'Party ID: ' + ${party.partyId}">Party ID</p>
-    <p th:text="'username: ' + ${user.username}">Party ID</p>
+    <p th:text="'username: ' + ${user.username}" >Party ID</p>
     <p th:text="'email: ' + ${user.email}">Party ID</p>
 </div>
 
@@ -29,6 +29,7 @@
             <!-- 실시간 채팅 메시지가 표시됩니다 -->
         </ul>
     </div>
+	<p hidden id="username" th:text="${user.username}" >Party ID</p>
     <input type="text" id="message-input" placeholder="Enter your message" />
     <button id="send-btn">Send</button>
 </div>
@@ -48,7 +49,8 @@
     // 메시지 전송 버튼 클릭 이벤트 처리
     document.getElementById('send-btn').onclick = function () {
         const input = document.getElementById('message-input');
-        const message = input.value;
+		const un = document.getElementById('username');
+		const message = un.textContent + " : " + input.value;
         if (message.trim() !== "") {
             socket.send(message); // 서버로 메시지 전송
             input.value = ''; // 입력 필드 초기화

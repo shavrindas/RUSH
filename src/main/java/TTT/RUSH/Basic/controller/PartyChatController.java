@@ -10,7 +10,7 @@ import jakarta.servlet.http.HttpSession;
 
 @Controller
 public class PartyChatController {
-
+/*
     // Party Chat 페이지로 이동
     @GetMapping("/partyChatMainPage")
     public String partyChatMainPage(HttpSession session, Model model) {
@@ -29,4 +29,5 @@ public class PartyChatController {
 
         return "partyChatMainPage"; // HTML 파일 이름 변경
     }
+*/
 }
