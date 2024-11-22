@@ -5,23 +5,55 @@
     <title>Party Chat Page</title>
 </head>
 <body>
-    <!-- 네비게이션 바 -->
-    <div class="navbar">
-        <a th:href="@{'/partyBoardMainPage/' + ${party.partyId}}">BOARD</a>
-        <a th:href="@{'/partyGameMainPage/' + ${party.partyId}}">GAME</a>
-        <a th:href="@{'/partyChatMainPage/' + ${party.partyId}}">CHAT</a>
-        <a th:href="@{'/partyFileMainPage/' + ${party.partyId}}">FILE</a>
-        <a th:href="@{'/partySettingPage/' + ${party.partyId}}">SETTINGS</a>
-    </div>
-    <!-- 현재 파티 정보 -->
-    <div>
-        <p th:text="'Party: ' + ${party.partyName}">Party Name</p>
-        <p th:text="'Party ID: ' + ${party.partyId}">Party ID</p>
-        <p th:text="'username: ' + ${user.username}">Party ID</p>
-        <p th:text="'email: ' + ${user.email}">Party ID</p>
-    </div>
+<!-- 네비게이션 바 -->
+<div class="navbar">
+    <a th:href="@{'/partyBoardMainPage/' + ${party.partyId}}">BOARD</a>
+    <a th:href="@{'/partyGameMainPage/' + ${party.partyId}}">GAME</a>
+    <a th:href="@{'/partyChatMainPage/' + ${party.partyId}}">CHAT</a>
+    <a th:href="@{'/partyFileMainPage/' + ${party.partyId}}">FILE</a>
+    <a th:href="@{'/partySettingPage/' + ${party.partyId}}">SETTINGS</a>
+</div>
+<!-- 현재 파티 정보 -->
+<div>
+    <p th:text="'Party: ' + ${party.partyName}">Party Name</p>
+    <p th:text="'Party ID: ' + ${party.partyId}">Party ID</p>
+    <p th:text="'username: ' + ${user.username}">Party ID</p>
+    <p th:text="'email: ' + ${user.email}">Party ID</p>
+</div>
 
-    <h1>Party Chat Page</h1>
-    <p>채팅 관련 콘텐츠를 여기에 추가하세요.</p>
+<h1>Party Chat Page</h1>
+<!-- 채팅 UI 추가 -->
+<div id="chat-container">
+    <div id="chat-window" style="border: 1px solid #ccc; height: 300px; overflow-y: scroll;">
+        <ul id="messages">
+            <!-- 실시간 채팅 메시지가 표시됩니다 -->
+        </ul>
+    </div>
+    <input type="text" id="message-input" placeholder="Enter your message" />
+    <button id="send-btn">Send</button>
+</div>
+
+<script>
+    // WebSocket 연결 설정
+    const socket = new WebSocket('ws://localhost:8080/chat');
+
+    // 서버로부터 메시지를 받았을 때 처리
+    socket.onmessage = function (event) {
+        const messageList = document.getElementById('messages');
+        const newMessage = document.createElement('li');
+        newMessage.textContent = event.data;
+        messageList.appendChild(newMessage);
+    };
+
+    // 메시지 전송 버튼 클릭 이벤트 처리
+    document.getElementById('send-btn').onclick = function () {
+        const input = document.getElementById('message-input');
+        const message = input.value;
+        if (message.trim() !== "") {
+            socket.send(message); // 서버로 메시지 전송
+            input.value = ''; // 입력 필드 초기화
+        }
+    };
+</script>
 </body>
 </html>
