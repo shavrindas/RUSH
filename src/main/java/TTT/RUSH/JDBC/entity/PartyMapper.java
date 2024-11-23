@@ -3,7 +3,6 @@ package TTT.RUSH.JDBC.entity;
 import org.springframework.jdbc.core.RowMapper;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import TTT.RUSH.JDBC.entity.Party;
 
 public class PartyMapper implements RowMapper<Party> {
 

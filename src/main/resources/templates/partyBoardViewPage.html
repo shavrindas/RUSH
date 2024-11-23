@@ -80,7 +80,7 @@ view 페이지 구현 요소
 	        </li>
 	    </th:block>
 	</ul>
-    <!-- 게시글 목록 -->
+   <!-- 게시글 목록 -->
     <h2>Posts</h2>
     <ul>
         <th:block th:each="post : ${posts}">
@@ -90,6 +90,19 @@ view 페이지 구현 요소
             </li>
         </th:block>
     </ul>
+
+    <!-- 페이징 UI -->
+    <div class="pagination" th:if="${totalPages > 1}">
+        <a th:href="@{'/partyBoardMainPage/' + ${party.partyId} + '?page=1'}">맨앞으로가기</a>
+
+        <th:block th:each="i : ${#numbers.sequence(1, totalPages)}">
+            <a th:classappend="${currentPage == i} ? 'active'" 
+               th:href="@{'/partyBoardMainPage/' + ${party.partyId} + '?page=' + ${i}}"
+               th:text="${i}">1</a>
+        </th:block>
+
+        <a th:href="@{'/partyBoardMainPage/' + ${party.partyId} + '?page=' + ${totalPages}}">맨뒤로가기</a>
+    </div>
 </body>
 </html>
 

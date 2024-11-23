@@ -2,9 +2,7 @@ package TTT.RUSH.Basic.service;
 
 import TTT.RUSH.JDBC.dao.PartyBoardPostDao;
 import TTT.RUSH.JDBC.entity.PartyBoardComment;
-import TTT.RUSH.JDBC.entity.PartyBoardImage;
 import TTT.RUSH.JDBC.entity.PartyBoardPost;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Service;
 
@@ -14,11 +12,21 @@ import java.util.List;
 public class PartyBoardService {
 
     private final PartyBoardPostDao postDao;
-    
-    @Autowired
+   
     public PartyBoardService(JdbcTemplate jdbcTemplate) {
         this.postDao = new PartyBoardPostDao(jdbcTemplate);  
     }
+    
+    // 특정 partyId와 페이지 번호로 게시글 가져오기
+    public List<PartyBoardPost> getPostsByPartyIdAndPage(Long partyId, int page, int pageSize) {
+        return postDao.getPostsByPartyIdAndPage(partyId, page, pageSize);
+    }
+
+    // 특정 partyId의 전체 게시글 수 가져오기
+    public int getPostCountByPartyId(Long partyId) {
+        return postDao.getPostCountByPartyId(partyId);
+    }
+
     
     // 게시글 리스트 조회
     public List<PartyBoardPost> getAllPosts() {

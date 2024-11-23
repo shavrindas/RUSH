@@ -1,27 +1,36 @@
-<!-- partyBoardMainPage.html -->
 <!DOCTYPE html>
 <html lang="ko">
 <head>
     <meta charset="UTF-8">
     <title>Party Board</title>
+    <style>
+        .active {
+            font-weight: bold;
+            text-decoration: underline;
+        }
+    </style>
 </head>
 <body>
-        <!-- 네비게이션 바  여기있는건 다른곳과 다름  -->
-	<div class="navbar">
-	    <a th:href="@{'/partyBoardMainPage/' + ${party.partyId}}">BOARD</a>
-	    <a th:href="@{'/partyGameMainPage/' + ${party.partyId}}">GAME</a>
-	    <a th:href="@{'/partyChatMainPage/' + ${party.partyId}}">CHAT</a>
-	    <a th:href="@{'/partyFileMainPage/' + ${party.partyId}}">FILE</a>
-	    <a th:href="@{'/partySettingPage/' + ${party.partyId}}">SETTINGS</a>
-	</div>
-    
+    <!-- 네비게이션 바 -->
+    <div class="navbar">
+        <a th:href="@{'/partyBoardMainPage/' + ${party.partyId}}">BOARD</a>
+        <a th:href="@{'/partyGameMainPage/' + ${party.partyId}}">GAME</a>
+        <a th:href="@{'/partyChatMainPage/' + ${party.partyId}}">CHAT</a>
+        <a th:href="@{'/partyFileMainPage/' + ${party.partyId}}">FILE</a>
+        <a th:href="@{'/partySettingPage/' + ${party.partyId}}">SETTINGS</a>
+    </div>
+
     <!-- 현재 파티 정보 -->
     <div>
         <p th:text="'Party: ' + ${party.partyName}">Party Name</p>
         <p th:text="'Party ID: ' + ${party.partyId}">Party ID</p>
-        <p th:text="'username: ' + ${user.username}">Party ID</p>
-        <p th:text="'email: ' + ${user.email}">Party ID</p>
+        <p th:text="'Username: ' + ${user.username}">Username</p>
+        <p th:text="'Email: ' + ${user.email}">Email</p>
     </div>
+
+ 	<!-- 새 게시글 작성 -->
+    <a href="/partyBoardCreatePage">Create New Post</a>
+
     <!-- 게시글 목록 -->
     <h2>Posts</h2>
     <ul>
@@ -32,7 +41,23 @@
             </li>
         </th:block>
     </ul>
-    <!-- 새 게시글 작성 -->
-    <a href="/partyBoardCreatePage">Create New Post</a>
+
+	<!-- 페이징 UI -->
+	<div class="pagination" th:if="${totalPages > 1}">
+	    <a th:href="@{'/partyBoardMainPage/' + ${party.partyId} + '?page=1'}">맨앞으로가기</a>
+	
+	    <th:block th:each="i : ${#numbers.sequence(1, totalPages)}">
+	        <a th:classappend="${currentPage == i} ? 'active'" 
+	           th:href="@{'/partyBoardMainPage/' + ${party.partyId} + '?page=' + ${i}}"
+	           th:text="${i}">1</a>
+	    </th:block>
+	
+	    <a th:href="@{'/partyBoardMainPage/' + ${party.partyId} + '?page=' + ${totalPages}}">맨뒤로가기</a>
+	</div>
+
+
+
+
 </body>
 </html>
+

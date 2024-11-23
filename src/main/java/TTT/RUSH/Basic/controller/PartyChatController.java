@@ -1,5 +1,5 @@
 package TTT.RUSH.Basic.controller;
-
+/*
 import TTT.RUSH.JDBC.entity.Party;
 import TTT.RUSH.JDBC.entity.Users;
 import org.springframework.stereotype.Controller;
@@ -7,8 +7,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
 import jakarta.servlet.http.HttpSession;
-
 @Controller
+*/
 public class PartyChatController {
 /*
     // Party Chat 페이지로 이동

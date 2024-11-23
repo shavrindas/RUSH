@@ -1,7 +1,6 @@
 package TTT.RUSH.JDBC.dao;
 
 import TTT.RUSH.JDBC.entity.PartyBoardComment;
-import TTT.RUSH.JDBC.entity.PartyBoardImage;
 import TTT.RUSH.JDBC.entity.PartyBoardPost;
 
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
@@ -21,6 +20,35 @@ public class PartyBoardPostDao {
         this.jdbcTemplate = jdbcTemplate;
     }
 
+ // 특정 partyId와 페이지 번호로 게시글 가져오기
+    @SuppressWarnings("deprecation")
+	public List<PartyBoardPost> getPostsByPartyIdAndPage(Long partyId, int page, int pageSize) {
+        String sql = "SELECT * FROM party_board_post WHERE party_id = ? ORDER BY created_at DESC LIMIT ? OFFSET ?";
+        int offset = (page - 1) * pageSize;
+        return jdbcTemplate.query(sql, new Object[]{partyId, pageSize, offset}, new RowMapper<PartyBoardPost>() {
+            @Override
+            public PartyBoardPost mapRow(java.sql.ResultSet rs, int rowNum) throws java.sql.SQLException {
+                PartyBoardPost post = new PartyBoardPost();
+                post.setPostId(rs.getInt("post_id"));
+                post.setPartyId(rs.getInt("party_id"));
+                post.setTitle(rs.getString("title"));
+                post.setContent(rs.getString("content"));
+                post.setAuthor(rs.getString("author"));
+                post.setCreatedAt(rs.getTimestamp("created_at"));
+                post.setUpdatedAt(rs.getTimestamp("updated_at"));
+                return post;
+            }
+        });
+    }
+
+    // partyId에 해당하는 전체 게시글 수 가져오기
+    public int getPostCountByPartyId(Long partyId) {
+        String sql = "SELECT COUNT(*) FROM party_board_post WHERE party_id = ?";
+        return jdbcTemplate.queryForObject(sql, new Object[]{partyId}, Integer.class);
+    }
+
+    
+    
     // 모든 게시글 가져오기
     public List<PartyBoardPost> getAllPosts() {
         String sql = "SELECT * FROM party_board_post";
@@ -41,7 +69,8 @@ public class PartyBoardPostDao {
     }
 
     // partyId에 해당하는 게시글만 가져오기
-    public List<PartyBoardPost> getPostsByPartyId(Long partyId) {
+    @SuppressWarnings("deprecation")
+	public List<PartyBoardPost> getPostsByPartyId(Long partyId) {
         String sql = "SELECT * FROM party_board_post WHERE party_id = ?";
         return jdbcTemplate.query(sql, new Object[]{partyId}, new RowMapper<PartyBoardPost>() {
             @Override
@@ -59,7 +88,8 @@ public class PartyBoardPostDao {
         });
     }
     
-    public PartyBoardPost getPostsById(Long postId) {
+    @SuppressWarnings("deprecation")
+	public PartyBoardPost getPostsById(Long postId) {
         String sql = "SELECT * FROM party_board_post WHERE post_id = ?";
         return jdbcTemplate.queryForObject(sql, new Object[]{postId}, new RowMapper<PartyBoardPost>() {
             @Override
