@@ -29,33 +29,36 @@
             <!-- 실시간 채팅 메시지가 표시됩니다 -->
         </ul>
     </div>
+    <p hidden id="partyId" th:text="${party.partyId}" >Party ID</p>
 	<p hidden id="username" th:text="${user.username}" >Party ID</p>
     <input type="text" id="message-input" placeholder="Enter your message" />
     <button id="send-btn">Send</button>
 </div>
 
 <script>
-    // WebSocket 연결 설정
-    const socket = new WebSocket('ws://localhost:8080/chat');
+	const partyId = document.getElementById('partyId').textContent;
+	const socket = new WebSocket(`ws://localhost:8080/chat/${partyId}`);
 
     // 서버로부터 메시지를 받았을 때 처리
     socket.onmessage = function (event) {
+    	console.log("수신 메시지:", event.data); // 수신 로그
         const messageList = document.getElementById('messages');
         const newMessage = document.createElement('li');
         newMessage.textContent = event.data;
         messageList.appendChild(newMessage);
     };
 
-    // 메시지 전송 버튼 클릭 이벤트 처리
     document.getElementById('send-btn').onclick = function () {
         const input = document.getElementById('message-input');
-		const un = document.getElementById('username');
-		const message = un.textContent + " : " + input.value;
+        const username = document.getElementById('username').textContent;
+        const message = `${username}: ${input.value}`;
         if (message.trim() !== "") {
-            socket.send(message); // 서버로 메시지 전송
+            console.log("전송 메시지:", message); // 전송 로그
+            socket.send(message);
             input.value = ''; // 입력 필드 초기화
         }
     };
+
 </script>
 </body>
 </html>
