@@ -21,6 +21,9 @@
         <p th:text="'email: ' + ${user.email}">Party ID</p>
     </div>
     <h1>Party Game Page</h1>
-    <p>게임 관련 콘텐츠를 여기에 추가하세요.</p>
+    <div>
+        <a th:href="@{'/partyGameSnake/' + ${party.partyId}}">Snake</a>
+        <a th:href="@{'/partyGameMissile/' + ${party.partyId}}">Missile</a>
+    </div>
 </body>
 </html>
