@@ -21,6 +21,27 @@ public class PartyTEMPController {
         return "partyGameMainPage";
     }
 
+    @GetMapping("/partyGameSnake/{partyId}")
+    public String partyGameSnake(@PathVariable Long partyId, HttpSession session, Model model) {
+        Party party = (Party) session.getAttribute("currentParty");
+        Users user = (Users) session.getAttribute("user");
+
+        model.addAttribute("party", party);
+        model.addAttribute("user", user);
+        return "partyGameSnake"; // Snake 게임 페이지 뷰 이름
+    }
+
+    @GetMapping("/partyGameMissile/{partyId}")
+    public String partyGameMissile(@PathVariable Long partyId, HttpSession session, Model model) {
+        Party party = (Party) session.getAttribute("currentParty");
+        Users user = (Users) session.getAttribute("user");
+
+        model.addAttribute("party", party);
+        model.addAttribute("user", user);
+        return "partyGameMissile"; // Missile 게임 페이지 뷰 이름
+    }
+
+
     @GetMapping("/partyChatMainPage/{partyId}")
     public String partyChatMainPage(@PathVariable Long partyId, HttpSession session, Model model) {
         Party party = (Party) session.getAttribute("currentParty");
