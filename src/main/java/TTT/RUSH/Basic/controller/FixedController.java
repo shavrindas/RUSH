@@ -57,7 +57,7 @@ public class FixedController {
             // 사용자 생성
             usersDao.createUser(newUser);
             model.addAttribute("message", "User created successfully!");
-            return "login";
+            return "index";
         } catch (SQLException e) {
             model.addAttribute("message", "Error occurred while creating user: " + e.getMessage());
             return "userCreate"; // 오류 발생 시 다시 userCreate 페이지로 리다이렉트

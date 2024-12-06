@@ -1,0 +1,21 @@
+/* 네비게이션 바 스타일 */
+nav {
+    display: flex;
+    justify-content: center; /* 네비게이션 항목을 중앙 정렬 */
+    gap: 40px; /* 메뉴 항목 간격 */
+    background-color: rgba(104, 86, 82, 0.8); /* 네비게이션 배경 색상 (40% 투명) */
+    padding: 10px 0; /* 상하 여백 */
+    height: 20px;
+}
+
+nav a {
+    text-decoration: none; /* 링크 밑줄 제거 */
+    color: #f0e6d2; /* 텍스트 색상 */
+    font-weight: bold; /* 텍스트 굵게 */
+    font-size: 16px; /* 폰트 크기 */
+    transition: color 0.3s; /* 색상 전환 효과 */
+}
+
+nav a:hover {
+    color: #d4c5a6; /* 호버 시 색상 변경 */
+}

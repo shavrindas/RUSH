@@ -23,13 +23,32 @@ public class PartyDao {
     }
 
     // 파티 생성
+    /*
     public int createParty(String partyName) {
         String sql = "INSERT INTO party (party_name, party_code, party_invite, party_active) VALUES (?, ?, ?, 1)";
         String partyCode = generatePartyCode();
         jdbcTemplate.update(sql, partyName, partyCode, partyCode); // 처음 생성은 party_code와 party_invite를 동일하게 설정 
         return jdbcTemplate.queryForObject("SELECT LAST_INSERT_ID()", Integer.class);
     }
+     */
+    
+    public int createParty(String partyName) {
+        // 1. 파티 생성
+        String sql = "INSERT INTO party (party_name, party_code, party_invite, party_active) VALUES (?, ?, ?, 1)";
+        String partyCode = generatePartyCode();  
+        jdbcTemplate.update(sql, partyName, partyCode, partyCode); 
+        int partyId = jdbcTemplate.queryForObject("SELECT LAST_INSERT_ID()", Integer.class); 
 
+        String postSql = "INSERT INTO party_board_post (party_id, title, content, author) VALUES (?, ?, ?, ?)";
+        String firstPostTitle = "첫 포스트 예요";  
+        String firstPostContent = "이건 파티가 생성될 때 자동으로 생성되는 첫 번째 포스트입니다.";
+        String firstPostAuthor = "시스템";  
+
+        jdbcTemplate.update(postSql, partyId, firstPostTitle, firstPostContent, firstPostAuthor);
+        return partyId;
+    }
+    
+    
     // 기본 역할 생성 (admin, editor, ban) <- 롤을 수정할 수 있어도 이거 기본형은 못지우게 처리해둬야함
     public void createDefaultRoles(int partyId) {
         String sql = "INSERT INTO role (party_id, role_name, project_delete, admin_delete, basic_delete, basic_write, file_write, comment_write) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
@@ -85,6 +104,11 @@ public class PartyDao {
             partyCode = UUID.randomUUID().toString().substring(0, 5).toUpperCase();
         } while (jdbcTemplate.queryForObject(sql, Integer.class, partyCode) > 0);
         return partyCode;
+    }
+
+    public void removeUserFromParty(int partyId, int userId) {
+        String sql = "DELETE FROM party_users WHERE party_id = ? AND user_id = ?";
+        jdbcTemplate.update(sql, partyId, userId);
     }
 
 

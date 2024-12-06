@@ -41,6 +41,9 @@ public class PartyService {
         return partyDao.findPartyById(partyId);
     }
     
-    
+    public void deleteParty(int userId, int partyId) {
+        partyDao.removeUserFromParty(partyId, userId);
+
+    }
     
 }

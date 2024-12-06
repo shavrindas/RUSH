@@ -2,19 +2,47 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-    <meta charset="UTF-8">
-    <title>Index - Navigation</title>
+    <link rel="stylesheet" href="/images/index.css">
+    <link rel="stylesheet" href="/images/Header.css">
 </head>
 <body>
-    <h1>RUSH TTT</h1>
-    <h3>디버그</h3>
-    <nav>
-        <ul>
-            <li><a href="/userDetails">User Details</a></li>
-            <li><a href="/userCreate">User Create</a></li>
-            <li><a href="/login">User Login</a></li>
-            <li><a href="/userFind">User FindPass</a></li>
-        </ul>
-    </nav>
+<!-- 헤더 -->
+<header>
+    <h1>Study Village</h1>
+    <div class="auth-buttons">
+        <!-- 로그인 버튼 -->
+        <button onclick="window.location.href='/login';">Login</button>
+        <!-- 회원가입 버튼 -->
+        <button onclick="window.location.href='/userCreate';">Sign Up</button>
+    </div>
+</header>
+<!-- 네비게이션 -->
+<nav>
+    
+</nav>
+<!-- 메인 콘텐츠 -->
+<main>
+    <h2>Welcome to the Study Village</h2>
+    <!-- 그룹 리스트 -->
+    <div class="content">
+        <div class="group-box">
+            <h3>Math Wizards</h3>
+            <p>Discuss and solve challenging math problems together.</p>
+        </div>
+        <div class="group-box">
+            <h3>Science Explorers</h3>
+            <p>Explore the mysteries of science and share discoveries.</p>
+        </div>
+        <div class="group-box">
+            <h3>Literature Enthusiasts</h3>
+            <p>Dive into the world of classic and modern literature.</p>
+        </div>
+    </div>
+</main>
+<!-- 푸터 -->
+<footer>
+    &copy; 2024 Study Village. All rights reserved.
+</footer>
+</body>
 </body>
 </html>

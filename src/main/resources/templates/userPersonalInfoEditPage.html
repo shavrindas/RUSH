@@ -1,29 +1,70 @@
 <!DOCTYPE html>
-<html lang="ko">
+<html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>Edit Personal Info</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>사이드 바 존재 형식</title>
+    <link rel="stylesheet" href="/styles/basic/header.css">   <!--헤더임 -->
+   <link rel="stylesheet" href="/styles/user/basic.css">   <!--기본 레이아웃-->
+
+   <link rel="stylesheet" href="/styles/basic/footer.css">   <!--풋타임-->
+<style>
+  .toolbar {
+    background-color: #ddd; /* 툴바 색상 */
+    padding: 10px;
+    border-radius: 5px;
+    margin-bottom: 10px;
+  }
+
+  .row {
+    margin: 10px 0;
+    padding: 10px;
+    background-color: #eef;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+  }
+</style>
 </head>
 <body>
-    <h1>Edit Your Information</h1>
+   
+<!--헤더 여기에-->   
+<div th:replace="~{reuse/header2 :: header}"></div>
 
-    <form action="/updatePersonalInfo" method="POST">
-        <label for="username">Username:</label>
-        <input type="text" id="username" name="username" th:value="${user.username}" required>
-        <br><br>
+<!--네비게이션 여기에-->   
 
-        <label for="email">Email:</label>
-        <input type="email" id="email" name="email" th:value="${user.email}" required>
-        <br><br>
 
-        <label for="password">New Password:</label>
-        <input type="password" id="password" name="password" placeholder="Enter new password">
-        <br><br>
+<!--페이지 내용 여기에-->
+<div class="page-container">
 
-        <button type="submit">Save Changes</button>
-    </form>
+  <div class="page-right">
+    <div class="page-inner-container">
+      <!--내용 여기에-->
+      
+      <h1>Edit Your Information</h1>
 
-    <br>
-    <a href="/userPersonalSettingPage">Cancel</a>
+      <form action="/updatePersonalInfo" method="POST">
+          <label for="username">Username:</label>
+          <input type="text" id="username" name="username" th:value="${user.username}" required>
+          <br><br>
+
+          <label for="email">Email:</label>
+          <input type="email" id="email" name="email" th:value="${user.email}" required>
+          <br><br>
+
+          <label for="password">New Password:</label>
+          <input type="password" id="password" name="password" placeholder="Enter new password">
+          <br><br>
+
+          <button type="submit">Save Changes</button>
+      </form>
+
+      <br>
+      <a href="/userPersonalSettingPage">Cancel</a>
+    </div>
+  </div>
+</div>
+
+<!--풋터 여기에-->   
+<div th:replace="~{reuse/footer :: footer}"></div>
 </body>
 </html>

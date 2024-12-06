@@ -1,0 +1,63 @@
+/* 헤더 스타일 */
+.profile-container {
+    position: absolute; /* 절대 위치 지정 */
+    top: 10px; /* 상단에서 10px 아래로 위치 */
+    left: 20px; /* 왼쪽에서 10px 떨어진 위치 */
+    display: flex;
+    justify-content: center; /* 가로 중앙 정렬 */
+    align-items: center; /* 세로 중앙 정렬 */
+    width: 50px; /* 컨테이너 너비 */
+    height: 50px; /* 컨테이너 높이 */
+    border-radius: 50%; /* 원형 컨테이너 */
+    background-color: rgba(104, 86, 82, 0.8); /* 배경 색상 */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* 그림자 효과 */
+    cursor: pointer; /* 마우스를 올리면 포인터로 변경 */
+}
+
+.profile-icon {
+    font-size: 24px; /* 아이콘 크기 */
+    color: #f0e6d2; /* 아이콘 색상 */
+}
+
+.profile-container:hover {
+    background-color: rgba(140, 182, 139, 0.8); /* 호버 시 배경 색상 변경 */
+}
+
+header {
+    background-color: #685652;
+    padding: 10px 20px;
+    display: flex;
+    justify-content: center; /*space-between   가로방향 */
+    align-items: center;    /* 세로 방향 */
+    color: #f0e6d2;
+}
+
+header h1 {
+    margin: 10px;
+    font-size: 28px;
+    font-family: 'Georgia', serif;
+}
+
+/* 인증 버튼 그룹 (헤더 우측에 배치하려면 추가) */
+.auth-buttons {
+    position: absolute; /* 헤더 안에서 절대 위치 지정 */
+    right: 20px; /* 헤더 오른쪽에서 20px 떨어진 위치 */
+    display: flex; /* 버튼들을 가로로 정렬 */
+    gap: 10px; /* 버튼 간격 설정 */
+}
+
+
+.auth-buttons button {
+    background-color: #F2AF9B;
+    border: none;
+    border-radius: 5px;
+    padding: 8px 16px;
+    color: #685652;
+    font-size: 14px;
+    cursor: pointer;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.auth-buttons button:hover {
+    background-color: #f59c81;
+}

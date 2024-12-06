@@ -21,15 +21,65 @@ public class UserSettingsController {
     private PartyService partyService;
     
     
+    // 사용자 개인 페이지
+    @GetMapping("/userPersonalPage")
+    public String userPersonalPage(Model model, HttpSession session) {
+        // 세션에서 사용자 정보 가져오기
+        Users user = (Users) session.getAttribute("user");
+        int userId = (user != null) ? user.getId() : -1; // 로그인된 경우 userId 설정
+
+        // 사용자 정보가 있을 경우
+        if (user != null) {
+            model.addAttribute("user", user); 
+        } else {
+            return "redirect:/login";
+        }
+        // 사용자 파티 정보 가져오기
+        if (userId != -1) {
+            List<Party> parties = partyService.getUserParties(userId);
+            model.addAttribute("parties", parties);  
+        }
+
+        return "userPersonalPage";  
+    }
+    
+    
     // [Fixed] 설정 페이지
     @GetMapping("/userPersonalSettingPage")
     public String personalSettingsPage(HttpSession session, Model model) {
         Users user = (Users) session.getAttribute("user");
+        int userId = (user != null) ? user.getId() : -1; // 로그인된 경우 userId 설정
+        
         if (user != null) {
             model.addAttribute("user", user);
+            
+            // 파티 정보 가져오기
+            if (userId != -1) {
+                List<Party> parties = partyService.getUserParties(userId);
+                model.addAttribute("parties", parties);  
+            }
+
             return "userPersonalSettingPage"; 
         }
+
         return "redirect:/login"; 
+    }
+
+    // 파티 삭제
+    @PostMapping("/deleteParty")
+    public String deleteParty(HttpSession session, @RequestParam("partyId") int partyId, Model model) {
+        Users user = (Users) session.getAttribute("user");
+
+        if (user == null) {
+            return "redirect:/login";
+        }
+
+        int userId = user.getId();
+
+        // 파티 삭제 처리
+        partyService.deleteParty(userId, partyId);
+
+        return "redirect:/userPersonalPage"; // 파티 삭제 후, 다시 개인 페이지로 리다이렉트
     }
 
     // [Fixed] 개인정보 수정 페이지
@@ -65,27 +115,7 @@ public class UserSettingsController {
 
 
 
-    // 사용자 개인 페이지
-    @GetMapping("/userPersonalPage")
-    public String userPersonalPage(Model model, HttpSession session) {
-        // 세션에서 사용자 정보 가져오기
-        Users user = (Users) session.getAttribute("user");
-        int userId = (user != null) ? user.getId() : -1; // 로그인된 경우 userId 설정
 
-        // 사용자 정보가 있을 경우
-        if (user != null) {
-            model.addAttribute("user", user); 
-        } else {
-            return "redirect:/login";
-        }
-        // 사용자 파티 정보 가져오기
-        if (userId != -1) {
-            List<Party> parties = partyService.getUserParties(userId);
-            model.addAttribute("parties", parties);  
-        }
-
-        return "userPersonalPage";  
-    }
 
     // [Fixed] 파티 생성 및 참가 페이지
     @GetMapping("/userPersonalPartyCratePage")
@@ -107,6 +137,9 @@ public class UserSettingsController {
         partyService.createParty(partyName, userId);
         return "redirect:/userPersonalPage"; 
     }
+    
+    
+    
 
     // [Fixed] 새로운 파티에 참가하는 메서드
     @PostMapping("/joinParty")

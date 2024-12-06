@@ -3,29 +3,54 @@
 <head>
     <meta charset="UTF-8">
     <title>Create User</title>
+    <!-- CSS 파일 포함 -->
+    <link rel="stylesheet" href="/images/joinstyles.css">
+    <link rel="stylesheet" href="/images/Header.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
+<header style="position: fixed; top: 0; left: 0; width: 98%; z-index: 1000;">
+    <div class="profile-container">
+        <a href="/index">
+            <i class="fas fa-home profile-icon"></i> <!-- Font Awesome 집 모양 아이콘 -->
+        </a>
+    </div>
+    <h1>Study Village</h1>
+    <div class="auth-buttons">
+        <!-- 로그인 버튼 -->
+        <button onclick="window.location.href='/login';">Login</button>
+        <!-- 회원가입 버튼 -->
+        <button onclick="window.location.href='/userCreate';">Sign Up</button>
+    </div>
+</header>
 <body>
-    <a href="/index">Go index</a>
+    <div class="background"></div>
+<div class="container">
     <h1>Create New User</h1>
-    
+
     <!-- 사용자 정보를 입력받는 폼 -->
     <form action="/createUser" method="post">
-        <label for="username">Username:</label>
-        <input type="text" id="username" name="username" required />
-        <br><br>
-        
-        <label for="password">Password:</label>
-        <input type="password" id="password" name="password" required />
-        <br><br>
-        
-        <label for="email">Email:</label>
-        <input type="email" id="email" name="email" required />
-        <br><br>
-        
-        <button type="submit">Create User</button>
+        <label for="username"></label>
+        <input type="text" id="username" name="username" placeholder="Enter your username" required />
+        <br>
+
+        <label for="password"></label>
+        <input type="password" id="password" name="password" placeholder="Enter your password" required />
+        <br>
+
+        <label for="email"></label>
+        <input type="email" id="email" name="email" placeholder="Enter your email" required />
+        <br>
+
+        <button type="submit" class="btn">계정 만들기</button>
     </form>
-    
+
+    <p>
+        <a href="/login">이미 계정이 있으신가요?</a>
+    </p>
     <!-- 뒤로 가기 버튼 -->
-    <a href="/index">Go back</a>
+    <p>
+        <a href="/index">뒤로 가기</a>
+    </p>
+</div>
 </body>
 </html>

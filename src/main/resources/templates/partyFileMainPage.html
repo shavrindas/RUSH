@@ -2,7 +2,29 @@
 <html lang="ko">
 <head>
     <meta charset="UTF-8">
-    <title>Party File Page</title>
+    <title>Party File Upload</title>
+    <style>
+        /* 그리드 레이아웃을 사용하여 8개의 열로 파일 항목 배치 */
+        .file-grid {
+            display: grid;
+            grid-template-columns: repeat(8, 1fr);  /* 8개의 열 */
+            gap: 10px;
+            margin: 20px 0;
+        }
+        .file-item {
+            text-align: center;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        .file-item:hover {
+            background-color: #f9f9f9;
+        }
+        .file-name {
+            margin: 10px 0;
+            font-weight: bold;
+        }
+    </style>
 </head>
 <body>
     <!-- 네비게이션 바 -->
@@ -13,15 +35,138 @@
         <a th:href="@{'/partyFileMainPage/' + ${party.partyId}}">FILE</a>
         <a th:href="@{'/partySettingPage/' + ${party.partyId}}">SETTINGS</a>
     </div>
+
     <!-- 현재 파티 정보 -->
     <div>
         <p th:text="'Party: ' + ${party.partyName}">Party Name</p>
         <p th:text="'Party ID: ' + ${party.partyId}">Party ID</p>
-        <p th:text="'username: ' + ${user.username}">Party ID</p>
-        <p th:text="'email: ' + ${user.email}">Party ID</p>
+        <p th:text="'username: ' + ${user.username}">User Name</p>
+        <p th:text="'email: ' + ${user.email}">Email</p>
     </div>
 
-    <h1>Party File Page</h1>
-    <p>파일 관련 콘텐츠를 여기에 추가하세요.</p>
+    <h1>Party File List</h1>
+
+    <!-- 파일 목록을 그리드 레이아웃으로 표시 -->
+    <div class="file-grid">
+<div th:each="file : ${fileList}" class="file-item" id="file-item-[[${file.fileId}]]">
+    <p class="file-name" th:text="${file.fileName}">File Name</p>
+
+    <!-- 이미지 파일 미리보기 -->
+    <div class="file-preview">
+        <!-- 이미지 파일들 -->
+        <img th:if="${file.fileName.endsWith('.png') or file.fileName.endsWith('.jpg') or file.fileName.endsWith('.jpeg')}" 
+             th:src="@{'/party/file/download/' + ${file.fileId}}" 
+             alt="Image Preview" width="100px" />
+             
+        <!-- PDF 아이콘 -->
+        <img th:if="${file.fileName.endsWith('.pdf')}" 
+             src="/images/fileIcon/pdf-icon.png" 
+             alt="PDF Icon" width="50px" />
+
+        <!-- Word 아이콘 -->
+        <img th:if="${file.fileName.endsWith('.doc') or file.fileName.endsWith('.docx')}" 
+             src="/images/fileIcon/word-icon.png" 
+             alt="Word Icon" width="50px" />
+        
+        <!-- Excel 아이콘 -->
+        <img th:if="${file.fileName.endsWith('.xls') or file.fileName.endsWith('.xlsx')}" 
+             src="/images/fileIcon/excel-icon.png" 
+             alt="Excel Icon" width="50px" />
+        
+        <!-- PowerPoint 아이콘 -->
+        <img th:if="${file.fileName.endsWith('.ppt') or file.fileName.endsWith('.pptx')}" 
+             src="/images/fileIcon/ppt-icon.png" 
+             alt="PowerPoint Icon" width="50px" />
+        
+        <!-- 텍스트 파일 아이콘 -->
+        <img th:if="${file.fileName.endsWith('.txt')}" 
+             src="/images/fileIcon/txt-icon.png" 
+             alt="Text Icon" width="50px" />
+        
+        <!-- HTML 파일 아이콘 -->
+        <img th:if="${file.fileName.endsWith('.html') or file.fileName.endsWith('.htm')}" 
+             src="/images/fileIcon/html-icon.png" 
+             alt="HTML Icon" width="50px" />
+        
+        <!-- 압축 파일 아이콘 -->
+        <img th:if="${file.fileName.endsWith('.zip') or file.fileName.endsWith('.rar')}" 
+             src="/images/fileIcon/zip-icon.png" 
+             alt="Zip Icon" width="50px" />
+
+        <!-- JavaScript 파일 아이콘 -->
+        <img th:if="${file.fileName.endsWith('.js')}" 
+             src="/images/fileIcon/js-icon.png" 
+             alt="JavaScript Icon" width="50px" />
+        
+        <!-- CSS 파일 아이콘 -->
+        <img th:if="${file.fileName.endsWith('.css')}" 
+             src="/images/fileIcon/css-icon.png" 
+             alt="CSS Icon" width="50px" />
+
+        <!-- JSON 파일 아이콘 -->
+        <img th:if="${file.fileName.endsWith('.json')}" 
+             src="/images/fileIcon/json-icon.png" 
+             alt="JSON Icon" width="50px" />
+        
+        <!-- XML 파일 아이콘 -->
+        <img th:if="${file.fileName.endsWith('.xml')}" 
+             src="/images/fileIcon/xml-icon.png" 
+             alt="XML Icon" width="50px" />
+        
+        <!-- CSV 파일 아이콘 -->
+        <img th:if="${file.fileName.endsWith('.csv')}" 
+             src="/images/fileIcon/csv-icon.png" 
+             alt="CSV Icon" width="50px" />
+        
+        <!-- Audio 파일 아이콘 -->
+        <img th:if="${file.fileName.endsWith('.mp3') or file.fileName.endsWith('.wav') or file.fileName.endsWith('.ogg')}" 
+             src="/images/fileIcon/audio-icon.png" 
+             alt="Audio Icon" width="50px" />
+        
+        <!-- Video 파일 아이콘 -->
+        <img th:if="${file.fileName.endsWith('.mp4') or file.fileName.endsWith('.avi') or file.fileName.endsWith('.mov')}" 
+             src="/images/fileIcon/video-icon.png" 
+             alt="Video Icon" width="50px" />
+        
+        <!-- 기타 파일 아이콘 (기본 파일 아이콘) -->
+        <img th:if="${!(file.fileName.endsWith('.png') or file.fileName.endsWith('.jpg') or file.fileName.endsWith('.jpeg') or file.fileName.endsWith('.pdf') or file.fileName.endsWith('.doc') or file.fileName.endsWith('.docx') or file.fileName.endsWith('.xls') or file.fileName.endsWith('.xlsx') or file.fileName.endsWith('.ppt') or file.fileName.endsWith('.pptx') or file.fileName.endsWith('.txt') or file.fileName.endsWith('.html') or file.fileName.endsWith('.htm') or file.fileName.endsWith('.zip') or file.fileName.endsWith('.rar') or file.fileName.endsWith('.js') or file.fileName.endsWith('.css') or file.fileName.endsWith('.json') or file.fileName.endsWith('.xml') or file.fileName.endsWith('.csv') or file.fileName.endsWith('.mp3') or file.fileName.endsWith('.wav') or file.fileName.endsWith('.ogg') or file.fileName.endsWith('.mp4') or file.fileName.endsWith('.avi') or file.fileName.endsWith('.mov'))}" 
+             src="/images/fileIcon/default-icon.png" 
+             alt="File Icon" width="50px" />
+    </div>
+    
+    <!-- 다운로드 및 삭제 버튼 -->
+    <form th:action="@{'/party/file/download/' + ${file.fileId}}" method="get">
+        <button type="submit">다운로드</button>
+    </form>
+    <button th:attr="onclick='deleteFile(' + ${file.fileId} + ')'" type="button">삭제</button>
+</div>
+
+
+    </div>
+
+    <h2>File Upload</h2>
+    <form action="/party/file/upload" method="post" enctype="multipart/form-data">
+        <input type="hidden" name="partyId" th:value="${party.partyId}">
+        <label for="file">파일 선택:</label>
+        <input type="file" id="file" name="file" required>
+        <button type="submit">업로드</button>
+    </form>
+
+<script>
+function deleteFile(fileId) {
+    fetch(`/party/file/delete/${fileId}`, {
+        method: 'DELETE',
+    })
+    .then(response => response.text())
+    .then(data => {
+        console.log(data);
+        // 삭제 후 페이지 새로 고침
+        location.reload();  // 페이지를 새로 고침
+    })
+    .catch(error => console.error('Error:', error));
+}
+</script>
+
 </body>
 </html>
+

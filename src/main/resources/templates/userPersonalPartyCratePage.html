@@ -1,31 +1,72 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-    <meta charset="UTF-8">
-    <title>Create or Join Party</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>사이드 바 존재 형식</title>
+	<link rel="stylesheet" href="/styles/basic/header.css">   <!--헤더임 -->
+	<link rel="stylesheet" href="/styles/user/basic.css">   <!--기본 레이아웃-->
+	<link rel="stylesheet" href="/styles/basic/footer.css">   <!--풋타임-->
+<style>
+  .toolbar {
+    background-color: #ddd; /* 툴바 색상 */
+    padding: 10px;
+    border-radius: 5px;
+    margin-bottom: 10px;
+  }
+
+  .row {
+    margin: 10px 0;
+    padding: 10px;
+    background-color: #eef;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+  }
+</style>
 </head>
 <body>
-    <h1>Create or Join a Party</h1>
+   
+<!--헤더 여기에-->   
+<div th:replace="~{reuse/header1 :: header}"></div>
 
-    <!-- 파티 생성 폼 -->
-    <form action="/createParty" method="POST">
-        <label for="partyName">Party Name:</label>
-        <input type="text" id="partyName" name="partyName" required>
-        <br><br>
-        <button type="submit">Create Party</button>
-    </form>
+<!--네비게이션 여기에-->   
 
-    <br>
 
-    <!-- 파티 참가 폼 -->
-	<form action="/joinParty" method="POST">
-	    <label for="partyCode">Party Code:</label>
-	    <input type="text" id="partyCode" name="party_code" required> <!-- party_code로 수정 -->
-	    <br><br>
-	    <button type="submit">Join Party</button>
-	</form>
+<!--페이지 내용 여기에-->
+<div class="page-container">
 
-    <br>
-    <a href="/userPersonalPage">Back to Dashboard</a>
+  <!--3/4-->
+  <div class="page-right">
+    <div class="page-inner-container">
+      <!--내용 여기에-->
+          <h1>Create or Join a Party</h1>
+
+      <!-- 파티 생성 폼 -->
+      <form action="/createParty" method="POST">
+          <label for="partyName">Party Name:</label>
+          <input type="text" id="partyName" name="partyName" required>
+          <br><br>
+          <button type="submit">Create Party</button>
+      </form>
+
+      <br>
+
+      <!-- 파티 참가 폼 -->
+      <form action="/joinParty" method="POST">
+          <label for="partyCode">Party Code:</label>
+          <input type="text" id="partyCode" name="party_code" required> <!-- party_code로 수정 -->
+          <br><br>
+          <button type="submit">Join Party</button>
+      </form>
+
+      <br>
+      <a href="/userPersonalPage">Back to Dashboard</a>
+      
+    </div>
+  </div>
+</div>
+
+<!--풋터 여기에-->   
+<div th:replace="~{reuse/footer :: footer}"></div>
 </body>
 </html>

@@ -1,0 +1,68 @@
+
+/* 블러 처리된 배경 */
+.background {
+    position: fixed; /* 화면 고정 */
+    top: 0; /* 화면 상단부터 시작 */
+    left: 0; /* 화면 왼쪽부터 시작 */
+    width: 100%; /* 화면 전체 너비 */
+    height: 100%; /* 화면 전체 높이 */
+    z-index: 0; /* 콘텐츠보다 뒤에 위치 */
+    background: url('/images/image.png') no-repeat center center fixed; /* 이미지 배치 및 고정 */
+	background-color: rgba(0, 0, 0, 0); /* 완전히 투명 */
+    background-size: cover; /* 배경 이미지를 화면에 맞게 확장 */
+    
+}
+
+
+/* Body 스타일 */
+body {
+    margin: 0;
+    padding: 0;
+    font-family: 'Arial', sans-serif;
+	color: #333;
+	
+
+}
+
+.page-container { /*검은 배경이 보이면 뭔가 잘못된 거임*/
+  display: flex;
+  background-color: black;
+  height: 100vh;
+  background: url('/images/image.png') no-repeat center center fixed; /* 이미지 배치 및 고정 */
+  background-size: cover; /* 배경 이미지를 화면에 맞게 확장 */
+  
+  
+}
+
+.page-left {
+  flex: 1; /* 1/4 */
+
+  display: flex;
+  justify-content: center; /* 가운데 정렬 */
+  align-items: center; /* 가운데 정렬 */
+  
+  
+  
+}
+
+.page-right {
+  flex: 3; /* 3/4 */
+  display: flex;
+  justify-content: center; /* 가운데 정렬 */
+  align-items: center; /* 가운데 정렬 */
+}
+
+.page-inner-container {
+  width: 90%; /* 부모 너비의 80% */
+  height: 80%; 
+  background-color: #fff; 
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.1); 
+  padding: 20px;
+  box-sizing: border-box; 
+  min-width: 200px;
+  min-height: 200px;
+}
+
+
+
+

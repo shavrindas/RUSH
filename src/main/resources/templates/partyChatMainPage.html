@@ -1,47 +1,249 @@
 <!DOCTYPE html>
-<html lang="ko">
+<html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>Party Chat Page</title>
+    <meta charset="UTF-8"> <!-- 문서의 문자 인코딩을 UTF-8로 설정 -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"> <!-- 모바일 친화적인 화면 비율 설정 -->
+    <title>Study Village</title> <!-- 문서 제목 설정 -->
+    <!-- Font Awesome 라이브러리 추가 -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <!-- 외부 헤더 스타일 연결 -->
+    <link rel="stylesheet" href="/images/Header.css">
+    <link rel="stylesheet" href="/images/chatstyles.css">
+    <link rel="stylesheet" href="/images/nav.css">
+    <!-- 외부 네비게이션 스타일 연결 -->
+
+
+    </head>
 </head>
 <body>
-<!-- 네비게이션 바 -->
-<div class="navbar">
-    <a th:href="@{'/partyBoardMainPage/' + ${party.partyId}}">BOARD</a>
-    <a th:href="@{'/partyGameMainPage/' + ${party.partyId}}">GAME</a>
-    <a th:href="@{'/partyChatMainPage/' + ${party.partyId}}">CHAT</a>
-    <a th:href="@{'/partyFileMainPage/' + ${party.partyId}}">FILE</a>
-    <a th:href="@{'/partySettingPage/' + ${party.partyId}}">SETTINGS</a>
-</div>
-<!-- 현재 파티 정보 -->
-<div>
-    <p th:text="'Party: ' + ${party.partyName}">Party Name</p>
-    <p th:text="'Party ID: ' + ${party.partyId}">Party ID</p>
-    <p th:text="'username: ' + ${user.username}" >Party ID</p>
-    <p th:text="'email: ' + ${user.email}">Party ID</p>
+<!-- 블러 처리된 배경 -->
+<div class="background"></div>
+
+<!-- 헤더 영역 -->
+<header>
+
+    <h1>Study Village</h1> <!-- 제목 -->
+    <div class="auth-buttons">
+        <button onclick="window.location.href='/index';">Logout</button> <!-- 로그아웃 버튼 -->
+    </div>
+    <div class="profile-container">
+        <i class="fas fa-user-circle profile-icon"></i> <!-- Font Awesome 아이콘 -->
+    </div>
+</header>
+
+<!-- 네비게이션 영역 -->
+<nav>
+    <a href="#">Board</a> <!-- Board 링크 -->
+    <a href="#">File</a> <!-- File 링크 -->
+    <a href="#">Chat</a> <!-- Chat 링크 -->
+    <a href="#">Game</a> <!-- Game 링크 -->
+    <a href="#">Setting</a> <!-- Setting 링크 -->
+</nav>
+
+<div id="main-layout">
+    <!-- 사이드바 -->
+    <div id="sidebar">
+        <div id="groupName">
+            <h3>Group</h3>
+            <p>A</p>
+        </div>
+        <button onclick="toggleContainer(0)">계산기</button>
+        <button onclick="toggleContainer(1)">그래프</button>
+        <button onclick="toggleContainer(2)">수식변환</button>
+        <button onclick="toggleContainer(3)">사전</button>
+        <button onclick="toggleContainer(4)">맞춤법</button>
+    </div>
+
+    <!-- 기능 컨테이너들 -->
+    <div id="containers">
+
+        <div class="container" id="calculator-container">
+            <div class="header"></div>
+            <p>계산기</p>
+            <button class="close-btn">×</button>
+            <div class="content">
+                <div class="calculator">
+                    <div class="display-container">
+                        <input type="text" id="display" readonly placeholder="0">
+                        <button id="clear-btn" class="btn clr">CLR</button>
+                    </div>
+                    <div class="tabs">
+                        <button class="tab active">기본</button>
+                        <button class="tab">대수학</button>
+                        <button class="tab">삼각법</button>
+                        <button class="tab">미적분학</button>
+                        <button class="tab">통계</button>
+                        <button class="tab">문자</button>
+                        <button class="tab">행렬</button>
+                    </div>
+                    <div class="buttons"></div>
+                    <script src="calculator.js"></script>
+                </div>
+            </div>
+        </div>
+
+
+
+        <div class="container" id="graph-container">
+            <h4>그래프</h4>
+            <p>그래프 기능이 여기에 표시됩니다.</p>
+        </div>
+
+
+        <div class="container" id="formula-container">
+            <h4>수식변환</h4>
+            <p>수식변환 기능이 여기에 표시됩니다.</p>
+        </div>
+
+
+        <div class="container" id="dictionary-container">
+            <h4>사전</h4>
+            <p>사전 기능이 여기에 표시됩니다.</p>
+        </div>
+
+
+        <div class="container" id="spellcheck-container">
+            <h4>맞춤법</h4>
+            <p>맞춤법 기능이 여기에 표시됩니다.</p>
+        </div>
+
+    </div>
+
+    <!-- 채팅 UI 추가 -->
+    <div id="chat-container">
+        <!-- Party Info -->
+        <div class="party-info" th:text="${party.partyName}">
+        </div>
+
+        <!-- Chat Window -->
+        <div id="chat-window" style="border: 1px solid #ccc; height: 300px; overflow-y: scroll;">
+            <ul id="messages">
+            </ul>
+        </div>
+
+        <!-- Hidden Fields -->
+        <p hidden id="partyId" th:text="${party.partyId}">Party ID</p>
+        <p hidden id="username" th:text="${user.username}">Party ID</p>
+
+        <!-- Input Container -->
+        <div class="input-container">
+            <input type="text" id="message-input" placeholder="메시지를 입력해주세요">
+            <button id="send-btn">보내기</button>
+        </div>
+    </div>
+
+
+
 </div>
 
-<h1>Party Chat Page</h1>
-<!-- 채팅 UI 추가 -->
-<div id="chat-container">
-    <div id="chat-window" style="border: 1px solid #ccc; height: 300px; overflow-y: scroll;">
-        <ul id="messages">
-            <!-- 실시간 채팅 메시지가 표시됩니다 -->
-        </ul>
-    </div>
-    <p hidden id="partyId" th:text="${party.partyId}" >Party ID</p>
-	<p hidden id="username" th:text="${user.username}" >Party ID</p>
-    <input type="text" id="message-input" placeholder="Enter your message" />
-    <button id="send-btn">Send</button>
-</div>
+
+</body>
+
+<!-- 푸터 영역 -->
+<footer>
+    &copy; 2024 Study Village. All rights reserved. <!-- 푸터 텍스트 -->
+</footer>
+
+
 
 <script>
-	const partyId = document.getElementById('partyId').textContent;
-	const socket = new WebSocket(`ws://localhost:8080/chat/${partyId}`);
+    const containers = document.querySelectorAll('.container');
+    const buttons = document.querySelectorAll('#sidebar button');
+
+    const partyId = document.getElementById('partyId').textContent;
+    const socket = new WebSocket(`ws://localhost:8080/chat/${partyId}`);
+
+
+    let isDragging = false;
+    let offsetX = 0; // 클릭한 지점과 컨테이너의 왼쪽 모서리 간 거리
+    let offsetY = 0; // 클릭한 지점과 컨테이너의 위쪽 모서리 간 거리
+    let currentContainer = null; // 현재 드래그 중인 컨테이너
+
+    // 컨테이너 표시/숨김 토글
+    buttons.forEach((button, index) => {
+        button.addEventListener('click', () => {
+            const container = containers[index];
+            const isVisible = container.style.display === 'block';
+
+            // 모든 컨테이너 숨기기
+            containers.forEach(cont => cont.style.display = 'none');
+
+            if (!isVisible) {
+                container.style.display = 'block';
+
+                // 컨테이너를 화면 정중앙으로 위치
+                const containerRect = container.getBoundingClientRect();
+                const screenWidth = window.innerWidth;
+                const screenHeight = window.innerHeight;
+
+                // 정중앙 위치 계산
+                const centerX = (screenWidth - containerRect.width) / 2;
+                const centerY = (screenHeight - containerRect.height) / 2;
+
+                container.style.left = `${centerX}px`;
+                container.style.top = `${centerY}px`;
+            }
+        });
+    });
+
+    // 드래그 시작 이벤트
+    containers.forEach(container => {
+        const closeButton = container.querySelector('.close-btn');
+        if (closeButton) {
+            closeButton.addEventListener('click', () => {
+                container.style.display = 'none'; // 닫기 버튼 클릭 시 숨김
+            });
+        }
+
+        container.addEventListener('mousedown', (e) => {
+            // 드래그 시작
+            isDragging = true;
+            currentContainer = container;
+
+            // 컨테이너를 화면 정중앙으로 위치
+            const containerRect = container.getBoundingClientRect();
+            const screenWidth = window.innerWidth;
+            const screenHeight = window.innerHeight;
+
+            const centerX = (screenWidth - containerRect.width) / 2;
+            const centerY = (screenHeight - containerRect.height) / 2;
+
+            container.style.left = `${centerX}px`;
+            container.style.top = `${centerY}px`;
+
+            // 클릭한 위치와 컨테이너 모서리의 상대 좌표 계산
+            offsetX = e.clientX - centerX;
+            offsetY = e.clientY - centerY;
+
+            // 드래그 중임을 나타내는 스타일 변경
+            container.style.cursor = 'grabbing';
+        });
+
+        // 드래그 종료 이벤트
+        document.addEventListener('mouseup', () => {
+            isDragging = false;
+            currentContainer = null;
+            containers.forEach(cont => cont.style.cursor = 'move'); // 커서 복원
+        });
+
+        // 드래그 중 이벤트
+        document.addEventListener('mousemove', (e) => {
+            if (isDragging && currentContainer) {
+                // 새로운 위치 계산
+                const newLeft = e.clientX - offsetX;
+                const newTop = e.clientY - offsetY;
+
+                // 컨테이너 이동
+                currentContainer.style.left = `${newLeft}px`;
+                currentContainer.style.top = `${newTop}px`;
+            }
+        });
+    });
+
 
     // 서버로부터 메시지를 받았을 때 처리
     socket.onmessage = function (event) {
-    	console.log("수신 메시지:", event.data); // 수신 로그
+        console.log("수신 메시지:", event.data); // 수신 로그
         const messageList = document.getElementById('messages');
         const newMessage = document.createElement('li');
         newMessage.textContent = event.data;
@@ -51,14 +253,29 @@
     document.getElementById('send-btn').onclick = function () {
         const input = document.getElementById('message-input');
         const username = document.getElementById('username').textContent;
-        const message = `${username}: ${input.value}`;
+        const message = `${username} > ${input.value}`;
         if (message.trim() !== "") {
             console.log("전송 메시지:", message); // 전송 로그
             socket.send(message);
+
+            // 화면에 보낸 메시지 추가
+            //const messageList = document.getElementById('messages');
+            //const newMessage = document.createElement('li');
+            //newMessage.textContent = message; // 보낸 메시지 표시
+            //newMessage.classList.add('sent'); // 보낸 메시지 스타일 적용 (선택 사항)
+            //messageList.appendChild(newMessage);
+            //messageList.scrollTop = messageList.scrollHeight; // 스크롤을 맨 아래로
+
             input.value = ''; // 입력 필드 초기화
         }
     };
 
+
 </script>
-</body>
+
 </html>
+
+
+
+
+
